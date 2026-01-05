@@ -1,0 +1,18 @@
+# Environment variables (contains secrets!)
+.env
+
+# Rust build artifacts
+target/
+Cargo.lock
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if TypeScript version)
+node_modules/
+dist/

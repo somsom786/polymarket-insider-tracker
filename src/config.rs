@@ -27,6 +27,38 @@ pub fn max_price_threshold() -> f64 {
         .unwrap_or(0.30)  // Only alert on odds < 30% (contrarian/insider)
 }
 
+// ============================================================================
+// CLUSTER DETECTION CONFIG
+// ============================================================================
+
+/// Time window for cluster detection (minutes)
+pub fn cluster_window_mins() -> u64 {
+    env::var("CLUSTER_WINDOW_MINS")
+        .ok()
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(60)  // 1 hour window
+}
+
+/// Minimum fresh wallets to trigger cluster alert
+pub fn cluster_min_wallets() -> usize {
+    env::var("CLUSTER_MIN_WALLETS")
+        .ok()
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(3)  // 3+ wallets = coordinated
+}
+
+// ============================================================================
+// VOLUME SPIKE CONFIG  
+// ============================================================================
+
+/// Volume multiplier to trigger spike alert
+pub fn volume_spike_multiplier() -> f64 {
+    env::var("VOLUME_SPIKE_MULTIPLIER")
+        .ok()
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(5.0)  // 5x normal = spike
+}
+
 /// Polling interval in milliseconds
 pub fn poll_interval_ms() -> u64 {
     env::var("POLL_INTERVAL_MS")
