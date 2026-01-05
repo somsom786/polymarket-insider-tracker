@@ -1,21 +1,22 @@
 # Polymarket Insider Activity Tracker 🔍
 
-Real-time monitoring tool that detects "insider" betting behavior on Polymarket by identifying fresh wallets placing large aggressive bets.
+Real-time monitoring tool that detects insider betting behavior on Polymarket by identifying fresh wallets placing contrarian bets, coordinated cluster buying, and unusual volume spikes.
 
 ## Features
 
-- 🦀 **High Performance** - Built in Rust for speed
+- 🦀 **High Performance** - Built in Rust
 - 📱 **Telegram Alerts** - Instant notifications with buy links
-- 🎯 **Smart Detection** - Filters for fresh wallets + large taker BUYs
-- 🔄 **Real-time** - Polls every 2 seconds
+- 🎯 **Contrarian Detection** - Fresh wallets betting on low-odds outcomes
+- 👥 **Cluster Detection** - Multiple wallets entering same market
+- 📊 **Volume Spike Detection** - Unusual activity on dormant markets
 
-## Insider Detection Criteria
+## Detection Criteria
 
-| Filter | Threshold |
-|--------|-----------|
-| Trade Size | > $1,000 USD |
-| Trade Type | Taker BUY (aggressive) |
-| Wallet Freshness | ≤ 5 lifetime markets |
+| Alert Type | Trigger |
+|------------|---------|
+| 🎯 **Insider** | Fresh wallet (≤5 markets) + Taker BUY + Low odds (<30%) |
+| 👥 **Cluster** | 3+ fresh wallets same market within 1 hour |
+| 📊 **Volume Spike** | 5x normal hourly volume |
 
 ## Quick Start
 
@@ -23,8 +24,9 @@ Real-time monitoring tool that detects "insider" betting behavior on Polymarket 
 # Build
 cargo build --release
 
-# Configure Telegram (see below)
+# Configure Telegram
 cp .env.example .env
+# Edit .env with your bot token and chat ID
 
 # Run
 cargo run --release
@@ -32,38 +34,50 @@ cargo run --release
 
 ## Telegram Setup
 
-1. Message **@BotFather** on Telegram → `/newbot`
+1. Message **@BotFather** → `/newbot`
 2. Copy the bot token
-3. Start a chat with your bot, send "hello"
-4. Visit `https://api.telegram.org/botYOUR_TOKEN/getUpdates`
-5. Find your chat ID in the response
-
-Add to `.env`:
-```env
-TELEGRAM_BOT_TOKEN=your_token_here
-TELEGRAM_CHAT_ID=your_chat_id
-```
+3. Start chat with your bot, send "hello"
+4. Get chat ID: `https://api.telegram.org/botYOUR_TOKEN/getUpdates`
 
 ## Configuration
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `MIN_TRADE_SIZE_USD` | 1000 | Min trade value |
-| `MAX_UNIQUE_MARKETS` | 5 | Max markets for "fresh" |
-| `POLL_INTERVAL_MS` | 2000 | Poll interval (ms) |
+```env
+TELEGRAM_BOT_TOKEN=your_token
+TELEGRAM_CHAT_ID=your_chat_id
 
-## Alert Example
+# Detection thresholds
+MIN_TRADE_SIZE_USD=500
+MAX_PRICE_THRESHOLD=0.30      # Only alert on <30% odds
+MAX_UNIQUE_MARKETS=5          # Fresh wallet definition
+CLUSTER_MIN_WALLETS=3         # Min wallets for cluster
+CLUSTER_WINDOW_MINS=60        # Cluster time window
+VOLUME_SPIKE_MULTIPLIER=5.0   # 5x = spike
+```
 
+## Alert Examples
+
+**Insider Alert:**
 ```
 🚨 INSIDER ALERT [HIGH] 🚨
-
-📈 Market: Bitcoin $150k by March?
-🎯 Outcome: Yes
-💰 Value: $5,250.00
-👛 Wallet: 0x31a...abc
+📈 Market: Will X happen by Y?
+🎯 Outcome: Yes @ 12%
+👛 Wallet: 0x1234...abcd
 🔍 Reason: Fresh Wallet (2 markets) | Taker BUY
+```
 
-🛒 BUY NOW: https://polymarket.com/event/...
+**Cluster Alert:**
+```
+👥 CLUSTER DETECTED 👥
+📈 Market: Will Z happen?
+👛 3 fresh wallets in 45 mins
+💰 Combined: $4,500
+```
+
+**Volume Spike:**
+```
+📊 VOLUME SPIKE 📊
+📈 Market: Event outcome
+⚡ Volume: $25,000 (5x normal)
 ```
 
 ## License
