@@ -457,8 +457,8 @@ async fn send_telegram_test() -> anyhow::Result<()> {
 
 Monitoring for:
 • Fresh wallets (≤2 prior markets)
-• Large trades (>$5,000)
-• Contrarian bets (<35% odds)
+• Large trades (&gt;$5,000)
+• Contrarian bets (&lt;35% odds)
 • Excluded: crypto up/down, sports, hourly
 
 Alerts will appear here for REAL insider activity."#;
