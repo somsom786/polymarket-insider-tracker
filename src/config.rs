@@ -22,6 +22,14 @@ pub fn max_unique_markets() -> usize {
         .unwrap_or(2)  // 0-2 prior markets = potential insider wallet
 }
 
+/// New wallet threshold in hours (e.g., created < 24h ago)
+pub fn max_wallet_age_hours() -> u64 {
+    env::var("MAX_WALLET_AGE_HOURS")
+        .ok()
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(24)
+}
+
 /// Maximum price (odds) - Only alert on contrarian bets
 pub fn max_price_threshold() -> f64 {
     env::var("MAX_PRICE_THRESHOLD")

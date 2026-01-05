@@ -22,7 +22,7 @@ use api::{mask_address, ApiClient};
 use config::{
     discord_webhook_url, max_unique_markets, min_trade_size_usd, max_price_threshold,
     poll_interval_ms, telegram_bot_token, telegram_chat_id, telegram_enabled,
-    is_gambling_market,
+    is_gambling_market, max_wallet_age_hours,
 };
 use types::{AlertLevel, SuspectTrade, Trade, UserStats};
 
@@ -223,30 +223,42 @@ async fn analyze_trade(
     }
 
     let max_markets = max_unique_markets();
+    let max_age_hours = max_wallet_age_hours();
 
-    // Apply "sus" filter
+    // CRITERIA 1: Fresh Wallet (Few Markets)
     if user_stats.unique_markets <= max_markets {
+        
+        // CRITERIA 2: Fresh Wallet (Time)
+        // If we have activity data, ensure the wallet is young (created/first active recently)
+        let age_info = if let Some(first_act) = user_stats.first_activity_timestamp {
+            let now_ts = chrono::Utc::now().timestamp();
+            let age_hours = (now_ts - first_act) / 3600;
+            
+            if age_hours > max_age_hours as i64 {
+                return None; // Wallet is too old (> 24h)
+            }
+            format!("{}h old", age_hours)
+        } else {
+            "New".to_string()
+        };
+
         let value_usd = trade.value_usd();
 
         let mut reasons = vec![
             format!(
-                "Fresh Wallet ({} lifetime market{})",
+                "Fresh Wallet ({} mkts, {})",
                 user_stats.unique_markets,
-                if user_stats.unique_markets == 1 { "" } else { "s" }
+                age_info
             ),
             "Taker BUY (aggressive)".to_string(),
         ];
 
-        let alert_level = if user_stats.unique_markets <= 2 && value_usd >= 5000.0 {
+        let alert_level = if value_usd >= 5000.0 {
             reasons.push(format!("Large Position (${:.0})", value_usd));
             AlertLevel::High
-        } else if user_stats.unique_markets <= 1 {
-            reasons.push("Brand New Wallet".to_string());
-            AlertLevel::High
-        } else if user_stats.unique_markets <= 3 {
-            AlertLevel::Medium
         } else {
-            AlertLevel::Low
+            // Keep medium for smaller tests if any leak through
+            AlertLevel::Medium
         };
 
         let reason = reasons.join(" | ");
@@ -493,31 +505,33 @@ fn print_banner() {
     let min_size = min_trade_size_usd();
     let max_markets = max_unique_markets();
     let max_price = (max_price_threshold() * 100.0) as u32;
+    let max_age = max_wallet_age_hours();
     let discord_enabled = discord_webhook_url().is_some();
     let tg_enabled = telegram_enabled();
 
     println!(
         r#"
 ╔═══════════════════════════════════════════════════════════════╗
-║      {} POLYMARKET INSIDER TRACKER - REAL DETECTION {}       ║
+║       {} POLYMARKET INSIDER TRACKER - PERFECT SETUP {}       ║
 ╠═══════════════════════════════════════════════════════════════╣
-║  Detecting REAL insider bets (NOT crypto gambling!)            ║
+║  Searching for "The Perfect Trade" (Maduro-style insiders)     ║
 ║                                                                ║
-║  Filters:                                                      ║
-║    × EXCLUDED: Crypto up/down, sports, hourly markets          ║
-║    • Min Trade:     ${:<8.0} (real insider size)           ║
-║    • Max Odds:      <{}% (contrarian bets)                   ║
-║    • Fresh Wallet:  ≤{} prior markets                         ║
-║    • Trade Type:    Taker BUY (aggressive)                     ║
+║  Perfect Criteria:                                             ║
+║    • Wallet Age:    < {} hours (Fresh burner)                  ║
+║    • Experience:    ≤ {} prior markets                         ║
+║    • Position:      ${:<8.0} (High conviction)             ║
+║    • Odds:          < {}% (Contrarian bet)                     ║
+║    • Type:          Aggressive Taker BUY only                  ║
 ║                                                                ║
 ║  Alerts: Telegram {} | Discord {}                     ║
 ╚═══════════════════════════════════════════════════════════════╝
 "#,
-        "🎯".red(),
-        "🎯".red(),
+        "💎".cyan(),
+        "💎".cyan(),
+        max_age,
+        max_markets,
         min_size,
         max_price,
-        max_markets,
         if tg_enabled { "✓" } else { "✗" },
         if discord_enabled { "✓" } else { "✗" }
     );

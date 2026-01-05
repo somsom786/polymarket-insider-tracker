@@ -149,6 +149,7 @@ pub struct UserStats {
     pub address: String,
     pub unique_markets: usize,
     pub total_trades: usize,
+    pub first_activity_timestamp: Option<i64>,
 }
 
 // ============================================================================

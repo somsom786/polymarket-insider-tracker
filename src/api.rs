@@ -88,8 +88,17 @@ impl ApiClient {
     pub fn calculate_user_stats(address: &str, activities: &[UserActivity]) -> UserStats {
         let mut unique_markets: HashSet<String> = HashSet::new();
         let mut total_trades = 0;
+        let mut min_timestamp: Option<i64> = None;
 
         for activity in activities {
+            // Track oldest activity
+            if let Some(ts) = activity.timestamp {
+                match min_timestamp {
+                    Some(min) => if ts < min { min_timestamp = Some(ts) },
+                    None => min_timestamp = Some(ts),
+                }
+            }
+
             // Count trades by checking if there's a condition_id and side
             if activity.side.is_some() {
                 if let Some(cid) = &activity.condition_id {
@@ -105,6 +114,7 @@ impl ApiClient {
             address: address.to_string(),
             unique_markets: unique_markets.len(),
             total_trades,
+            first_activity_timestamp: min_timestamp,
         }
     }
 }
