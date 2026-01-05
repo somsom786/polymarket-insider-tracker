@@ -1,43 +1,34 @@
-# Polymarket Insider Activity Tracker 🔍
+# Polymarket Insider Tracker 🎯
 
-Real-time monitoring tool that detects insider betting behavior on Polymarket by identifying fresh wallets placing contrarian bets, coordinated cluster buying, and unusual volume spikes.
+Real-time detection of **REAL** insider trading on Polymarket - not gambling noise.
 
-## Features
+## What This Detects
 
-- 🦀 **High Performance** - Built in Rust
-- 📱 **Telegram Alerts** - Instant notifications with buy links
-- 🎯 **Contrarian Detection** - Fresh wallets betting on low-odds outcomes
-- 👥 **Cluster Detection** - Multiple wallets entering same market
-- 📊 **Volume Spike Detection** - Unusual activity on dormant markets
-
-## Detection Criteria
-
-| Alert Type | Trigger |
-|------------|---------|
-| 🎯 **Insider** | Fresh wallet (≤5 markets) + Taker BUY + Low odds (<30%) |
-| 👥 **Cluster** | 3+ fresh wallets same market within 1 hour |
-| 📊 **Volume Spike** | 5x normal hourly volume |
+| ✅ Alert | ❌ Ignored |
+|----------|-----------|
+| Fresh wallet + $5k+ bet | Bitcoin Up/Down markets |
+| Contrarian odds (<35%) | Sports O/U bets |
+| Political/corporate events | Hourly/15-min markets |
+| 2 or fewer prior trades | Crypto price gambling |
 
 ## Quick Start
 
 ```bash
-# Build
 cargo build --release
-
-# Configure Telegram
-cp .env.example .env
-# Edit .env with your bot token and chat ID
-
-# Run
+cp .env.example .env  # Add your Telegram bot token
 cargo run --release
 ```
 
-## Telegram Setup
+## Detection Criteria
 
-1. Message **@BotFather** → `/newbot`
-2. Copy the bot token
-3. Start chat with your bot, send "hello"
-4. Get chat ID: `https://api.telegram.org/botYOUR_TOKEN/getUpdates`
+```
+🎯 INSIDER ALERT triggers when:
+  • Market is NOT gambling (crypto/sports/hourly excluded)
+  • Position size ≥ $5,000
+  • Wallet has ≤ 2 prior markets
+  • Odds < 35% (contrarian bet)
+  • Taker BUY order (aggressive)
+```
 
 ## Configuration
 
@@ -45,40 +36,32 @@ cargo run --release
 TELEGRAM_BOT_TOKEN=your_token
 TELEGRAM_CHAT_ID=your_chat_id
 
-# Detection thresholds
-MIN_TRADE_SIZE_USD=500
-MAX_PRICE_THRESHOLD=0.30      # Only alert on <30% odds
-MAX_UNIQUE_MARKETS=5          # Fresh wallet definition
-CLUSTER_MIN_WALLETS=3         # Min wallets for cluster
-CLUSTER_WINDOW_MINS=60        # Cluster time window
-VOLUME_SPIKE_MULTIPLIER=5.0   # 5x = spike
+MIN_TRADE_SIZE_USD=5000     # Real insider size
+MAX_UNIQUE_MARKETS=2        # Fresh wallet definition
+MAX_PRICE_THRESHOLD=0.35    # Contrarian threshold
 ```
 
-## Alert Examples
+## Telegram Setup
 
-**Insider Alert:**
-```
-🚨 INSIDER ALERT [HIGH] 🚨
-📈 Market: Will X happen by Y?
-🎯 Outcome: Yes @ 12%
-👛 Wallet: 0x1234...abcd
-🔍 Reason: Fresh Wallet (2 markets) | Taker BUY
-```
+1. Message **@BotFather** → `/newbot`
+2. Copy the bot token to `.env`
+3. Start chat with your bot, send "hello"
+4. Get chat ID: `https://api.telegram.org/botYOUR_TOKEN/getUpdates`
 
-**Cluster Alert:**
+## Sample Output
+
 ```
-👥 CLUSTER DETECTED 👥
-📈 Market: Will Z happen?
-👛 3 fresh wallets in 45 mins
-💰 Combined: $4,500
+[POLL #1] New: 100 | Non-gambling: 40 | Large($5k+): 2 | Contrarian: 0 | 🎯 INSIDERS: 0
 ```
 
-**Volume Spike:**
-```
-📊 VOLUME SPIKE 📊
-📈 Market: Event outcome
-⚡ Volume: $25,000 (5x normal)
-```
+## Why This Works
+
+Based on research of real insider cases:
+- **Maduro bet**: $630k from 3 new wallets hours before news
+- **Nobel Prize**: Odds jumped 3.6% → 70% before announcement
+- **Google leaks**: Exact launch dates bet before public knowledge
+
+Real insiders bet **BIG** on **political/corporate events**, not $86 on Bitcoin hourly.
 
 ## License
 
