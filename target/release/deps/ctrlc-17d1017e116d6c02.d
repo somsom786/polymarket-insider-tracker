@@ -1,0 +1,11 @@
+C:\Users\raynh\.gemini\antigravity\playground\aphelion-schrodinger\target\release\deps\ctrlc-17d1017e116d6c02.d: C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\lib.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\error.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\platform\mod.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\platform\windows\mod.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\signal.rs
+
+C:\Users\raynh\.gemini\antigravity\playground\aphelion-schrodinger\target\release\deps\libctrlc-17d1017e116d6c02.rlib: C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\lib.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\error.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\platform\mod.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\platform\windows\mod.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\signal.rs
+
+C:\Users\raynh\.gemini\antigravity\playground\aphelion-schrodinger\target\release\deps\libctrlc-17d1017e116d6c02.rmeta: C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\lib.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\error.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\platform\mod.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\platform\windows\mod.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\signal.rs
+
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\lib.rs:
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\error.rs:
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\platform\mod.rs:
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\platform\windows\mod.rs:
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ctrlc-3.5.1\src\signal.rs:

@@ -1,0 +1,11 @@
+C:\Users\raynh\.gemini\antigravity\playground\aphelion-schrodinger\target\release\deps\dotenv-c4bc9548f785a2a2.d: C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\lib.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\parse.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\errors.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\iter.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\find.rs
+
+C:\Users\raynh\.gemini\antigravity\playground\aphelion-schrodinger\target\release\deps\libdotenv-c4bc9548f785a2a2.rlib: C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\lib.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\parse.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\errors.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\iter.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\find.rs
+
+C:\Users\raynh\.gemini\antigravity\playground\aphelion-schrodinger\target\release\deps\libdotenv-c4bc9548f785a2a2.rmeta: C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\lib.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\parse.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\errors.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\iter.rs C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\find.rs
+
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\lib.rs:
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\parse.rs:
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\errors.rs:
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\iter.rs:
+C:\Users\raynh\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\dotenv-0.15.0\src\find.rs:
