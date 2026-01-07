@@ -1,65 +1,58 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState } from 'react';
+import { Header } from '@/components/header';
+import { KpiCards } from '@/components/kpi-cards';
+import { TickerLeaderboard } from '@/components/ticker-leaderboard';
+import { useMarketStats } from '@/lib/hooks';
+import { formatCurrency } from '@/lib/utils';
+
+export default function DashboardPage() {
+  const [currency, setCurrency] = useState<'USD' | 'ETH'>('USD');
+  const { data } = useMarketStats();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-[var(--background)]">
+      <Header currency={currency} onCurrencyChange={setCurrency} />
+
+      <div className="p-6">
+        {/* Page Title */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold">Protocol Overview</h1>
+          <p className="text-sm text-[var(--text-muted)]">
+            Live data from Variational&apos;s peer-to-peer derivatives protocol
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* KPI Cards - Only real API metrics */}
+        <div className="mb-6">
+          <KpiCards />
         </div>
-      </main>
+
+        {/* Loss Refund Info */}
+        {data && (
+          <div className="mb-6 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+            <h3 className="mb-3 text-sm font-medium">Loss Refunds (24h)</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <div className="text-xs text-[var(--text-dim)]">Pool Size</div>
+                <div className="text-lg font-semibold text-[var(--accent-green)]">
+                  {formatCurrency(parseFloat(data.loss_refund.pool_size))}
+                </div>
+              </div>
+              <div>
+                <div className="text-xs text-[var(--text-dim)]">Refunded (24h)</div>
+                <div className="text-lg font-semibold">
+                  {formatCurrency(parseFloat(data.loss_refund.refunded_24h))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Ticker Leaderboard - Real API Data */}
+        <TickerLeaderboard />
+      </div>
     </div>
   );
 }

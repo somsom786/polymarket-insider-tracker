@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Variational Analytics Dashboard
+
+A production-ready analytics dashboard for [Variational](https://variational.io/) — a generalized protocol for leveraged peer-to-peer derivatives trading.
+
+Built with Next.js 16, styled like DefiLlama with high data density and a professional dark theme.
+
+![Dashboard Overview](https://github.com/user-attachments/assets/placeholder.png)
+
+## Features
+
+- **Live API Data** — Fetches real-time metrics from `https://omni-client-api.prod.ap-northeast-1.variational.io/metadata/stats`
+- **487+ Markets** — View all perpetual markets with live prices, volumes, and funding rates
+- **Protocol Metrics** — TVL, 24h Volume, Open Interest, Cumulative Volume, Loss Refund Pool
+- **DefiLlama Aesthetic** — Dark theme, dense typography, professional data tables
+
+## Pages
+
+| Route | Description |
+|-------|-------------|
+| `/` | Overview with KPI cards, loss refunds, and markets table |
+| `/markets` | Full markets listing with sortable columns |
+| `/leaderboard` | Markets ranked by 24h trading volume |
+| `/treasury` | Protocol reserves and loss refund pool info |
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS 4
+- **Data Fetching**: TanStack Query
+- **Icons**: Lucide React
+- **Language**: TypeScript
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Reference
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This dashboard consumes the Variational public API:
 
-## Learn More
+```
+GET /metadata/stats
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Response fields:**
+- `tvl` — Total Value Locked (USDC)
+- `total_volume_24h` — 24h trading volume
+- `open_interest` — Total open interest
+- `cumulative_volume` — Lifetime trading volume
+- `num_markets` — Number of listed markets
+- `loss_refund.pool_size` — Refund pool balance
+- `loss_refund.refunded_24h` — 24h refunds paid
+- `listings[]` — Per-market data (ticker, mark_price, volume_24h, funding_rate, etc.)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See the [Variational API Docs](https://docs.variational.io/technical-documentation/api) for more details.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/
+│   ├── page.tsx           # Overview dashboard
+│   ├── markets/page.tsx   # Markets listing
+│   ├── leaderboard/page.tsx
+│   ├── treasury/page.tsx
+│   └── layout.tsx         # Root layout with sidebar
+├── components/
+│   ├── sidebar.tsx        # Navigation sidebar
+│   ├── header.tsx         # Search, currency toggle, wallet
+│   ├── kpi-cards.tsx      # Metric cards
+│   ├── ticker-leaderboard.tsx  # Markets table
+│   └── providers.tsx      # TanStack Query provider
+└── lib/
+    ├── api.ts             # API client
+    ├── hooks.ts           # React Query hooks
+    ├── types.ts           # TypeScript interfaces
+    └── utils.ts           # Formatting helpers
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
